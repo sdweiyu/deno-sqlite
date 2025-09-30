@@ -6,14 +6,16 @@ OUT_WA = "sqlite.wasm"
 OUT_BN = "sqlite.js"
 OUT_TY = "sqlite.d.ts"
 
-SQLITE_DLD = "https://sqlite.org/2023/sqlite-src-3420000.zip"
-SQLITE_DIR = "sqlite-src-3420000"
+SQLITE_DLD = "https://sqlite.org/2025/sqlite-src-3500400.zip"
+SQLITE_DIR = "sqlite-src-3500400"
 
-WASI_DLD = "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0-linux.tar.gz"
+WASI_DLD = "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-27/wasi-sdk-27.0-x86_64-linux.tar.gz"
 WASI_TAR = wasi_dl_linux.tar.gz
+WASI_DIR = wasi-sdk-27.0-x86_64-linux
 ifeq ($(shell uname), Darwin)
-	WASI_DLD = "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-21/wasi-sdk-21.0-macos.tar.gz"
-	WASI_TAR = wasi_dl_darwin.tar.gz
+	WASI_DLD = "https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-27/wasi-sdk-27.0-x86_64-macos.tar.gz"
+	WASI_TAR = wasi_dl_macos.tar.gz
+	WASI_DIR = wasi-sdk-27.0-x86_64-macos
 endif
 
 CSRC  = ""
@@ -122,7 +124,7 @@ dlwasi:
 	sed -n '/${WASI_TAR}/p' ".checksums" | shasum -c -
 	rm -rf "wasi-sdk"
 	tar -xzvf "$(WASI_TAR)"
-	mv "wasi-sdk-21.0" "wasi-sdk"
+	mv "$(WASI_DIR)" "wasi-sdk"
 	rm "${WASI_TAR}"
 
 testdb:
